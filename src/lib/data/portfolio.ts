@@ -237,18 +237,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     featured: false,
     image: '/images/projects/deck-two-story-stairs.jpg',
   },
-  {
-    id: 'deck-05',
-    title: 'Covered Balcony Deck — Sunset Views',
-    category: 'decks',
-    description: 'Covered balcony-style composite deck with white columns, beadboard ceiling, composite railing with black aluminum balusters, and panoramic sunset views over open countryside.',
-    gradientFrom: '#c4935a',
-    gradientTo: '#4a90c4',
-    aspectRatio: '3/4',
-    featured: false,
-    image: '/images/projects/deck-covered-sunset.jpg',
-  },
-
   // ── Pergolas ────────────────────────────────────────────
   {
     id: 'pergola-01',

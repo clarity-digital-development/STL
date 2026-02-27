@@ -90,7 +90,6 @@ export const SERVICES: Service[] = [
       '/images/projects/deck-multilevel-sunlit.jpg',
       '/images/projects/deck-covered-pool-view.jpg',
       '/images/projects/deck-two-story-stairs.jpg',
-      '/images/projects/deck-covered-sunset.jpg',
     ],
   },
   {
