@@ -52,7 +52,6 @@ export const SERVICES: Service[] = [
     images: [
       '/images/projects/screened-porch-interior.jpg',
       '/images/projects/screened-enclosure-dark.jpg',
-      '/images/projects/screened-porch-white.jpg',
       '/images/projects/screened-enclosure-brown.jpg',
       '/images/projects/screened-porch-view.jpg',
       '/images/projects/screened-enclosure-white.jpg',
