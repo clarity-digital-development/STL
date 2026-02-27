@@ -1,9 +1,26 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import { BUSINESS } from '@/lib/constants'
 
 export function MobileCTA() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const handler = () => {
+      // Show after scrolling past roughly one viewport height (hero area)
+      setVisible(window.scrollY > window.innerHeight * 0.85)
+    }
+    window.addEventListener('scroll', handler, { passive: true })
+    handler()
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
+
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-30 md:hidden bg-navy/95 backdrop-blur-sm border-t border-white/10"
+      className={`fixed bottom-0 left-0 right-0 z-30 md:hidden bg-navy/95 backdrop-blur-sm border-t border-white/10 transition-transform duration-300 ${
+        visible ? 'translate-y-0' : 'translate-y-full'
+      }`}
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
       <div className="flex gap-3 px-4 py-3">
