@@ -18,17 +18,18 @@ export function Hero() {
             sizes="100vw"
             className="object-cover object-[center_60%]"
           />
-          {/* Subtle bottom gradient — just enough for text legibility */}
+          {/* Navy-tinted gradient overlay — bottom-heavy for text legibility */}
           <div
             className="absolute inset-0"
             style={{
               background: `
                 linear-gradient(
                   to top,
-                  rgba(12,20,34,0.9) 0%,
-                  rgba(12,20,34,0.6) 28%,
-                  rgba(12,20,34,0.15) 55%,
-                  transparent 100%
+                  rgba(12,20,34,0.95) 0%,
+                  rgba(12,20,34,0.85) 20%,
+                  rgba(12,20,34,0.55) 45%,
+                  rgba(12,20,34,0.2) 70%,
+                  rgba(12,20,34,0.08) 100%
                 )
               `,
             }}
@@ -39,13 +40,13 @@ export function Hero() {
         <div className="container-content relative z-10 px-4 md:px-8 pb-20 md:pb-20 pt-32 md:pt-48">
           <div className="max-w-2xl">
 
-            <h1 className="text-white text-2xl sm:text-3xl md:text-5xl mb-5 reveal">
+            <h1 className="text-white text-2xl sm:text-3xl md:text-5xl mb-5 reveal" style={{ textShadow: '0 2px 12px rgba(12,20,34,0.5)' }}>
               Precision Craftsmanship for
               <br />
               Tennessee&apos;s Finest Homes
             </h1>
 
-            <p className="text-white/70 text-base md:text-xl max-w-xl mb-8 font-body font-light leading-relaxed reveal reveal-delay-1">
+            <p className="text-white/90 text-base md:text-xl max-w-xl mb-8 font-body font-normal leading-relaxed reveal reveal-delay-1" style={{ textShadow: '0 1px 8px rgba(12,20,34,0.6)' }}>
               Custom fences, decks, screened enclosures, and finish carpentry
               across Middle Tennessee.
             </p>
