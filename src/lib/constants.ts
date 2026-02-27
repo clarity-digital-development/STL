@@ -1,0 +1,36 @@
+export const BUSINESS = {
+  name: "Sky's the Limit",
+  phone: '931-222-9770',
+  phoneHref: 'tel:+19312229770',
+  email: 'STLCustoms@outlook.com',
+  facebook: 'https://www.facebook.com/profile.php?id=100057458708679',
+  addressLocality: 'Clarksville',
+  addressRegion: 'TN',
+  addressCountry: 'US',
+  latitude: 36.5298,
+  longitude: -87.3595,
+  priceRange: '$$$',
+  yearsExperience: 6,
+  serviceAreas: [
+    'Nashville',
+    'Clarksville',
+    'Brentwood',
+    'Franklin',
+    'Belle Meade',
+    'Green Hills',
+    'Hendersonville',
+    'Spring Hill',
+    'Nolensville',
+    'Mt. Juliet',
+  ],
+  synchronyUrl: 'https://www.synchrony.com/financing/partner/home.html',
+  siteUrl: 'https://skysthelimittn.com',
+} as const
+
+export const NAV_ITEMS = [
+  { label: 'Services', href: '/services' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'About', href: '/about' },
+  { label: 'Financing', href: '/financing' },
+  { label: 'Contact', href: '/contact' },
+] as const
