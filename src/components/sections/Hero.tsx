@@ -10,7 +10,7 @@ export function Hero() {
         {/* Full-bleed hero photo — let the work sell itself */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
-            src="/images/hero/timber-frame-entry.jpg"
+            src="/images/hero/screened-enclosure-patio.jpg"
             alt=""
             fill
             priority
