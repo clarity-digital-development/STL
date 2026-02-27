@@ -39,7 +39,7 @@ export function Hero() {
         <div className="container-content relative z-10 px-4 md:px-8 pb-20 md:pb-20 pt-32 md:pt-48">
           <div className="max-w-2xl">
 
-            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl mb-5 reveal">
+            <h1 className="text-white text-2xl sm:text-3xl md:text-5xl mb-5 reveal">
               Precision Craftsmanship for
               <br />
               Tennessee&apos;s Finest Homes
