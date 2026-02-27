@@ -294,7 +294,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     gradientTo: '#4b5563',
     aspectRatio: '3/4',
     featured: false,
-    image: '/images/projects/concrete-pool-deck.jpg',
+    image: '/images/projects/concrete-stamped-patio-steps.jpg',
   },
   {
     id: 'concrete-02',
