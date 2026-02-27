@@ -47,7 +47,7 @@ export default function FinancingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-navy section-pad-lg pt-36">
+      <section className="bg-navy section-pad-lg pt-28 md:pt-36">
         <div className="container-content px-4 md:px-8">
           <p className="text-wood text-xs font-body font-semibold uppercase tracking-widest mb-4 reveal">
             Financing Options
@@ -187,10 +187,10 @@ export default function FinancingPage() {
             financing application together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button href="/contact" variant="wood" size="lg">
+            <Button href="/contact" variant="wood" size="lg" className="w-full sm:w-auto">
               Get a Free Estimate
             </Button>
-            <Button href={BUSINESS.synchronyUrl} variant="ghost" size="lg" external>
+            <Button href={BUSINESS.synchronyUrl} variant="ghost" size="lg" className="w-full sm:w-auto" external>
               Apply for Financing
             </Button>
           </div>

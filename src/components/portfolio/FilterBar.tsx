@@ -15,14 +15,14 @@ export function FilterBar({ categories, activeFilter, onFilterChange }: FilterBa
   const allFilters: FilterValue[] = ['all', ...categories]
 
   return (
-    <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects by category">
+    <div className="flex flex-wrap gap-2 md:gap-2" role="group" aria-label="Filter projects by category">
       {allFilters.map((filter) => (
         <button
           key={filter}
           onClick={() => onFilterChange(filter)}
           aria-pressed={activeFilter === filter}
           className={cn(
-            'px-4 py-2 rounded-full text-sm font-body font-medium transition-all duration-200',
+            'px-4 py-2.5 rounded-full text-sm font-body font-medium transition-all duration-200 min-h-[44px]',
             'focus:outline-none focus:ring-2 focus:ring-wood focus:ring-offset-2',
             activeFilter === filter
               ? 'bg-navy text-white shadow-sm'

@@ -32,10 +32,10 @@ export function HomeCTA() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center reveal reveal-delay-3">
-          <Button href="/contact" variant="wood" size="lg">
+          <Button href="/contact" variant="wood" size="lg" className="w-full sm:w-auto">
             Get a Free Estimate
           </Button>
-          <Button href={BUSINESS.phoneHref} variant="ghost" size="lg" external>
+          <Button href={BUSINESS.phoneHref} variant="ghost" size="lg" className="w-full sm:w-auto" external>
             Call {BUSINESS.phone}
           </Button>
         </div>

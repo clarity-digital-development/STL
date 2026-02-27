@@ -26,7 +26,7 @@ export function ServicePageTemplate({ slug, relatedSlugs, children }: ServicePag
       <ServiceSchema service={service} />
 
       {/* Hero */}
-      <section className="bg-navy section-pad-lg pt-36">
+      <section className="bg-navy section-pad-lg pt-28 md:pt-36">
         <div className="container-content px-4 md:px-8">
           <nav className="mb-6 text-sm font-body" aria-label="Breadcrumb">
             <Link href="/services" className="text-white/40 hover:text-wood transition-colors">
@@ -65,10 +65,10 @@ export function ServicePageTemplate({ slug, relatedSlugs, children }: ServicePag
               ))}
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button href="/contact" variant="primary" size="lg">
+              <Button href="/contact" variant="primary" size="lg" className="w-full sm:w-auto">
                 Request a Free Estimate
               </Button>
-              <Button href="/financing" variant="secondary" size="lg">
+              <Button href="/financing" variant="secondary" size="lg" className="w-full sm:w-auto">
                 Financing Available
               </Button>
             </div>

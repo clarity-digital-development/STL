@@ -5,7 +5,7 @@ import { BUSINESS } from '@/lib/constants'
 export function Hero() {
   return (
     <>
-      <section className="relative min-h-[95vh] flex items-end bg-navy overflow-hidden" aria-label="Hero">
+      <section className="relative hero-height flex items-end bg-navy overflow-hidden" aria-label="Hero">
 
         {/* Full-bleed hero photo — let the work sell itself */}
         <div className="absolute inset-0" aria-hidden="true">
@@ -36,10 +36,10 @@ export function Hero() {
         </div>
 
         {/* Content pinned to bottom */}
-        <div className="container-content relative z-10 pb-16 md:pb-20 pt-48">
+        <div className="container-content relative z-10 px-4 md:px-8 pb-20 md:pb-20 pt-32 md:pt-48">
           <div className="max-w-2xl">
 
-            <h1 className="text-white mb-5 reveal">
+            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl mb-5 reveal">
               Precision Craftsmanship for
               <br />
               Tennessee&apos;s Finest Homes
@@ -51,10 +51,10 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 reveal reveal-delay-2">
-              <Button href="/portfolio" variant="wood" size="lg">
+              <Button href="/portfolio" variant="wood" size="lg" className="w-full sm:w-auto">
                 View Our Work
               </Button>
-              <Button href="/contact" variant="ghost" size="lg">
+              <Button href="/contact" variant="ghost" size="lg" className="w-full sm:w-auto">
                 Request a Consultation
               </Button>
             </div>
@@ -65,7 +65,7 @@ export function Hero() {
 
       {/* Credibility strip — solid navy, separated from hero */}
       <div className="bg-navy border-t border-white/10">
-        <div className="container-content py-4 flex flex-wrap justify-center gap-x-10 gap-y-2">
+        <div className="container-content px-4 md:px-8 py-3 md:py-4 flex flex-wrap justify-center gap-x-6 md:gap-x-10 gap-y-2">
           {[
             `${BUSINESS.yearsExperience}+ Years in Business`,
             'Nashville & Clarksville',

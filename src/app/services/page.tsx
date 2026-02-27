@@ -17,7 +17,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Page Hero */}
-      <section className="bg-navy section-pad-lg pt-36">
+      <section className="bg-navy section-pad-lg pt-28 md:pt-36">
         <div className="container-content px-4 md:px-8">
           <p className="text-wood text-xs font-body font-semibold uppercase tracking-widest mb-4 reveal">
             What We Build

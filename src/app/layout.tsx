@@ -1,8 +1,9 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { MobileCTA } from '@/components/layout/MobileCTA'
 import { LocalBusinessSchema } from '@/components/seo/LocalBusinessSchema'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { BUSINESS } from '@/lib/constants'
@@ -20,6 +21,12 @@ const dmSans = DM_Sans({
   display: 'swap',
   weight: ['300', '400', '500', '600'],
 })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(BUSINESS.siteUrl),
@@ -74,6 +81,9 @@ export default function RootLayout({
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        {/* Spacer so footer content isn't hidden behind the floating mobile CTA */}
+        <div className="h-[68px] md:hidden" aria-hidden="true" />
+        <MobileCTA />
         <ScrollReveal />
       </body>
     </html>

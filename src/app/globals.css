@@ -19,12 +19,18 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    height: -webkit-fill-available;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-cream text-stone-900 font-body antialiased;
     font-size: 1rem;
     line-height: 1.7;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -72,12 +78,19 @@
 
 /* ── Component Utilities ──────────────────────────────── */
 @layer components {
+  /* Responsive section padding — reduced on mobile */
   .section-pad {
-    @apply py-section px-4 md:px-8;
+    @apply py-10 md:py-section px-4 md:px-8;
   }
 
   .section-pad-lg {
-    @apply py-section-lg px-4 md:px-8;
+    @apply py-14 md:py-section-lg px-4 md:px-8;
+  }
+
+  /* Hero full-height with dvh fallback for mobile Safari */
+  .hero-height {
+    min-height: 95vh;
+    min-height: 95dvh;
   }
 
   .container-content {
