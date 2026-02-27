@@ -35,39 +35,54 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <section className="section-pad bg-cream">
         <div className="container-content px-4 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {SERVICES.map((service, index) => (
               <Link
                 key={service.slug}
                 href={`/services/${service.slug}`}
-                className={`group flex flex-col md:flex-row gap-6 bg-white rounded-card shadow-card card-lift p-6 reveal ${
+                className={`group bg-white rounded-card shadow-card card-lift overflow-hidden reveal ${
                   index > 0 ? `reveal-delay-${Math.min(index, 5)}` : ''
                 }`}
               >
-                <div className="flex-shrink-0">
+                {/* Mobile: full-width image on top. Desktop: hidden (uses inline thumbnail instead) */}
+                <div className="md:hidden">
                   <ImagePlaceholder
                     src={service.image}
                     gradientFrom={service.gradientFrom}
                     gradientTo={service.gradientTo}
-                    aspectRatio="1/1"
+                    aspectRatio="16/9"
                     label={service.title}
-                    className="w-24 h-24"
-                    rounded
+                    rounded={false}
                   />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h2 className="text-navy text-xl font-display mb-2 group-hover:text-wood transition-colors duration-200">
-                    {service.title}
-                  </h2>
-                  <p className="text-stone-600 text-sm leading-relaxed">
-                    {service.shortDescription}
-                  </p>
-                  <span className="mt-3 text-wood text-sm font-body font-medium inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
-                    Learn more
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </span>
+
+                <div className="flex items-start gap-6 p-5 md:p-6">
+                  {/* Desktop: compact square thumbnail */}
+                  <div className="hidden md:block flex-shrink-0">
+                    <ImagePlaceholder
+                      src={service.image}
+                      gradientFrom={service.gradientFrom}
+                      gradientTo={service.gradientTo}
+                      aspectRatio="1/1"
+                      label={service.title}
+                      className="w-24 h-24"
+                      rounded
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-navy text-xl font-display mb-2 group-hover:text-wood transition-colors duration-200">
+                      {service.title}
+                    </h2>
+                    <p className="text-stone-600 text-sm leading-relaxed">
+                      {service.shortDescription}
+                    </p>
+                    <span className="mt-3 text-wood text-sm font-body font-medium inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
+                      Learn more
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
