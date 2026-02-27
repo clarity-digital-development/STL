@@ -21,16 +21,39 @@ export function ScrollReveal() {
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     )
 
-    // Small delay to let the new page render its elements
-    const timeout = setTimeout(() => {
+    // Observe all current .reveal elements
+    const observeAll = () => {
       document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => {
         observer.observe(el)
       })
-    }, 50)
+    }
+
+    // Initial pass
+    observeAll()
+
+    // Watch for new .reveal elements added to the DOM (client-side navigation, async renders)
+    const mutation = new MutationObserver((mutations) => {
+      let hasNew = false
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node instanceof HTMLElement) {
+            if (node.classList?.contains('reveal') && !node.classList.contains('is-visible')) {
+              hasNew = true
+            } else if (node.querySelectorAll) {
+              const children = node.querySelectorAll('.reveal:not(.is-visible)')
+              if (children.length > 0) hasNew = true
+            }
+          }
+        }
+      }
+      if (hasNew) observeAll()
+    })
+
+    mutation.observe(document.body, { childList: true, subtree: true })
 
     return () => {
-      clearTimeout(timeout)
       observer.disconnect()
+      mutation.disconnect()
     }
   }, [pathname])
 
