@@ -45,7 +45,7 @@ export function Hero() {
               Tennessee&apos;s Finest Homes
             </h1>
 
-            <p className="text-white/70 text-lg md:text-xl max-w-xl mb-8 font-body font-light leading-relaxed reveal reveal-delay-1">
+            <p className="text-white/70 text-base md:text-xl max-w-xl mb-8 font-body font-light leading-relaxed reveal reveal-delay-1">
               Custom fences, decks, screened enclosures, and finish carpentry
               across Middle Tennessee.
             </p>
