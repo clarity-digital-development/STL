@@ -55,22 +55,24 @@ export default function AboutPage() {
             <h2 className="heading-rule mb-6">The Sky&apos;s the Limit Story</h2>
             <div className="space-y-5 text-stone-600 leading-relaxed">
               <p>
-                Sky&apos;s the Limit was built on a simple premise: too many contractors
-                prioritize volume over quality. They rush through jobs, use whatever
-                lumber is cheapest that week, and move on. The result is work that
-                looks fine at first and falls apart in three years.
+                Marcus Carlson started Sky&apos;s the Limit with a straightforward belief:
+                too many contractors prioritize volume over quality. They rush through
+                jobs, use whatever lumber is cheapest that week, and move on. The result
+                is work that looks fine at first and falls apart in three years.
               </p>
               <p>
-                We do the opposite. Every project gets the time it takes to do it right.
-                Every material decision gets thought through. And every client gets the
-                honest answer — even when the honest answer is &ldquo;that&apos;s going
-                to cost more.&rdquo;
+                He named the company after his daughter, Sky — a reminder that the
+                work isn&apos;t just about building structures. It&apos;s about building
+                something worth handing down. Every project gets the time it takes to
+                do it right. Every material decision gets thought through. And every
+                client gets the honest answer — even when the honest answer
+                is &ldquo;that&apos;s going to cost more.&rdquo;
               </p>
               <p>
                 Based in Clarksville and now serving Nashville and surrounding communities,
-                we&apos;ve spent {BUSINESS.yearsExperience}+ years in business building a reputation
-                in Middle Tennessee for work that outlasts the competition — and for clients
-                who are glad they chose us.
+                Marcus and his crew have spent {BUSINESS.yearsExperience}+ years building a
+                reputation in Middle Tennessee for work that outlasts the competition — and
+                for clients who are glad they chose them.
               </p>
             </div>
             <div className="mt-8">
