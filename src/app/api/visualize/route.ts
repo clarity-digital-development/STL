@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { ALL_MATERIALS, STYLES, PROJECT_CONTEXT } from '@/lib/data/visualizer'
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
+function getAI() {
+  return new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
+}
 
 // ── Rate limiting (in-memory, resets on server restart) ──────────
 const ipCounts = new Map<string, { count: number; resetAt: number }>()
@@ -122,6 +124,7 @@ export async function POST(request: NextRequest) {
       contents = buildVisualizationPrompt(description, projectType, material, style)
     }
 
+    const ai = getAI()
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-image-preview',
       contents,
