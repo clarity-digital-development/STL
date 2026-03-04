@@ -6,6 +6,12 @@ function getAI() {
   return new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 }
 
+// Models to try in order — if one is overloaded, fall back to the next
+const IMAGE_MODELS = [
+  'gemini-3.1-flash-image',
+  'gemini-3-pro-image-preview',
+]
+
 // ── Rate limiting (in-memory, resets on server restart) ──────────
 const ipCounts = new Map<string, { count: number; resetAt: number }>()
 const MAX_PER_DAY = 10
@@ -125,44 +131,91 @@ export async function POST(request: NextRequest) {
     }
 
     const ai = getAI()
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-image-preview',
-      contents,
-      config: {
-        responseModalities: ['image', 'text'],
-      },
+
+    console.log('[visualize] Starting generation:', {
+      mode: imageFile ? 'image-to-image' : 'text-to-image',
+      projectType,
+      material,
+      style,
+      descriptionLength: description.length,
+      imageSize: imageFile ? `${(imageFile.size / 1024).toFixed(0)}KB` : null,
     })
 
-    // Extract generated image from response
-    const candidates = response.candidates
-    if (!candidates || candidates.length === 0) {
-      return NextResponse.json(
-        { error: 'No image was generated. Try adjusting your description.' },
-        { status: 422 }
-      )
-    }
+    // Try each model in order — fall back on 503 (overloaded)
+    let lastError: unknown = null
+    for (const model of IMAGE_MODELS) {
+      try {
+        console.log(`[visualize] Trying model: ${model}`)
+        const startTime = Date.now()
 
-    for (const part of candidates[0].content?.parts || []) {
-      if (part.inlineData) {
-        return NextResponse.json({
-          image: part.inlineData.data,
-          mimeType: part.inlineData.mimeType,
+        const response = await ai.models.generateContent({
+          model,
+          contents,
+          config: {
+            responseModalities: ['image', 'text'],
+          },
         })
+
+        const elapsed = Date.now() - startTime
+        console.log(`[visualize] ${model} responded in ${elapsed}ms`)
+
+        const candidates = response.candidates
+        if (!candidates || candidates.length === 0) {
+          console.warn(`[visualize] ${model} returned no candidates`)
+          return NextResponse.json(
+            { error: 'No image was generated. Try adjusting your description.' },
+            { status: 422 }
+          )
+        }
+
+        const parts = candidates[0].content?.parts || []
+        console.log(`[visualize] ${model} returned ${parts.length} parts:`, parts.map((p) =>
+          p.inlineData ? `image(${p.inlineData.mimeType}, ${((p.inlineData.data?.length || 0) / 1024).toFixed(0)}KB)` : `text(${(p.text || '').substring(0, 80)})`
+        ))
+
+        for (const part of parts) {
+          if (part.inlineData) {
+            console.log(`[visualize] Success! Returning image (${part.inlineData.mimeType})`)
+            return NextResponse.json({
+              image: part.inlineData.data,
+              mimeType: part.inlineData.mimeType,
+            })
+          }
+        }
+
+        console.warn(`[visualize] ${model} returned candidates but no image data`)
+        return NextResponse.json(
+          { error: 'The AI could not generate an image for this request. Try a different description.' },
+          { status: 422 }
+        )
+      } catch (err: unknown) {
+        lastError = err
+        const status = (err as { status?: number }).status
+        const errMsg = err instanceof Error ? err.message : String(err)
+        console.error(`[visualize] ${model} failed (status=${status}):`, errMsg)
+        // Only fall back on 503 (overloaded) — rethrow anything else
+        if (status !== 503) throw err
       }
     }
 
-    return NextResponse.json(
-      { error: 'The AI could not generate an image for this request. Try a different description.' },
-      { status: 422 }
-    )
+    // All models returned 503
+    throw lastError
   } catch (error) {
-    console.error('Visualize API error:', error)
+    const status = (error as { status?: number }).status
+    console.error(`[visualize] FINAL ERROR (status=${status}):`, error instanceof Error ? error.message : error)
+    console.error('[visualize] Full error:', JSON.stringify(error, Object.getOwnPropertyNames(error instanceof Error ? error : {}), 2))
+    let message: string
+    let httpStatus = 500
 
-    const message =
-      error instanceof Error && error.message.includes('SAFETY')
-        ? 'The request was flagged by safety filters. Try adjusting your description.'
-        : 'Failed to generate visualization. Please try again.'
+    if (status === 503) {
+      message = 'Our AI image service is experiencing high demand right now. Please try again in a few minutes.'
+      httpStatus = 503
+    } else if (error instanceof Error && error.message.includes('SAFETY')) {
+      message = 'The request was flagged by safety filters. Try adjusting your description.'
+    } else {
+      message = 'Failed to generate visualization. Please try again.'
+    }
 
-    return NextResponse.json({ error: message }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: httpStatus })
   }
 }
