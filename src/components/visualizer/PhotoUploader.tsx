@@ -102,7 +102,7 @@ export function PhotoUploader({ file, preview, onFileChange }: PhotoUploaderProp
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
         </svg>
         <p className="font-body text-navy font-medium mb-1">
-          Drag and drop or <span className="text-wood">browse</span>
+          Take a photo, drag &amp; drop, or <span className="text-wood">browse</span>
         </p>
         <p className="font-body text-xs text-stone-400">
           JPEG, PNG, or WebP — Max 10MB
@@ -114,7 +114,6 @@ export function PhotoUploader({ file, preview, onFileChange }: PhotoUploaderProp
           ref={inputRef}
           type="file"
           accept="image/jpeg,image/png,image/webp"
-          capture="environment"
           onChange={handleInputChange}
           className="hidden"
         />
