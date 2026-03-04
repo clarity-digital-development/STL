@@ -87,10 +87,11 @@
     @apply py-14 md:py-section-lg px-4 md:px-8;
   }
 
-  /* Hero full-height with dvh fallback for mobile Safari */
+  /* Hero — use svh so height is locked to smallest viewport (URL bar visible),
+     preventing the jump when mobile browser chrome hides on scroll */
   .hero-height {
     min-height: 95vh;
-    min-height: 95dvh;
+    min-height: 95svh;
   }
 
   .container-content {
