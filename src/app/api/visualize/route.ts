@@ -6,10 +6,11 @@ function getAI() {
   return new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 }
 
-// Models to try in order — if one is overloaded, fall back to the next
+// Models to try in order — if one is unavailable, fall back to the next
 const IMAGE_MODELS = [
-  'gemini-3.1-flash-image',
+  'gemini-3.1-flash-image-preview',
   'gemini-3-pro-image-preview',
+  'gemini-2.5-flash-image',
 ]
 
 // ── Rate limiting (in-memory, resets on server restart) ──────────
@@ -193,8 +194,8 @@ export async function POST(request: NextRequest) {
         const status = (err as { status?: number }).status
         const errMsg = err instanceof Error ? err.message : String(err)
         console.error(`[visualize] ${model} failed (status=${status}):`, errMsg)
-        // Only fall back on 503 (overloaded) — rethrow anything else
-        if (status !== 503) throw err
+        // Fall back on 503 (overloaded) or 404 (model removed) — rethrow anything else
+        if (status !== 503 && status !== 404) throw err
       }
     }
 
