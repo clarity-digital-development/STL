@@ -10,13 +10,13 @@ export function Hero() {
         {/* Full-bleed hero photo — let the work sell itself */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
-            src="/images/hero/screened-enclosure-patio.jpg"
+            src="/images/hero/hero-main.png"
             alt=""
             fill
             priority
-            quality={90}
+            unoptimized
             sizes="100vw"
-            className="object-cover object-[center_60%]"
+            className="object-cover object-[center_40%]"
           />
           {/* Navy-tinted gradient overlay — bottom-heavy for text legibility */}
           <div

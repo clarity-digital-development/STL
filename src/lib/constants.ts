@@ -30,6 +30,7 @@ export const BUSINESS = {
 export const NAV_ITEMS = [
   { label: 'Services', href: '/services' },
   { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Visualize', href: '/visualize' },
   { label: 'About', href: '/about' },
   { label: 'Financing', href: '/financing' },
   { label: 'Contact', href: '/contact' },
