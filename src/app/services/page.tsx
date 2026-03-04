@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder'
+import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 import { SERVICES } from '@/lib/data/services'
 
@@ -35,53 +35,61 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <section className="section-pad bg-cream">
         <div className="container-content px-4 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             {SERVICES.map((service, index) => (
               <Link
                 key={service.slug}
                 href={`/services/${service.slug}`}
-                className={`group bg-white rounded-card shadow-card card-lift overflow-hidden reveal ${
+                className={`group relative block rounded-card overflow-hidden shadow-card reveal ${
                   index > 0 ? `reveal-delay-${Math.min(index, 5)}` : ''
                 }`}
               >
-                {/* Mobile: full-width image on top. Desktop: hidden (uses inline thumbnail instead) */}
-                <div className="md:hidden">
-                  <ImagePlaceholder
+                {/* Image fills entire card */}
+                {service.image ? (
+                  <Image
                     src={service.image}
-                    gradientFrom={service.gradientFrom}
-                    gradientTo={service.gradientTo}
-                    aspectRatio="16/9"
-                    label={service.title}
-                    rounded={false}
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    quality={85}
                   />
-                </div>
+                ) : (
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(135deg, ${service.gradientFrom} 0%, ${service.gradientTo} 100%)`,
+                    }}
+                  />
+                )}
 
-                <div className="flex items-start gap-6 p-5 md:p-6">
-                  {/* Desktop: compact square thumbnail */}
-                  <div className="hidden md:block flex-shrink-0">
-                    <ImagePlaceholder
-                      src={service.image}
-                      gradientFrom={service.gradientFrom}
-                      gradientTo={service.gradientTo}
-                      aspectRatio="1/1"
-                      label={service.title}
-                      className="w-24 h-24"
-                      rounded
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-navy text-xl font-display mb-2 group-hover:text-wood transition-colors duration-200">
+                {/* Dark overlay — covers entire card */}
+                <div className="absolute inset-0 bg-navy/50 group-hover:bg-navy/65 transition-colors duration-300 z-10" />
+
+                {/* Content layer */}
+                <div className="relative z-20 flex flex-col aspect-[3/4]">
+                  {/* Title centered */}
+                  <div className="flex-1 flex items-center justify-center px-6">
+                    <h2 className="text-white font-display text-xl md:text-2xl text-center drop-shadow-lg">
                       {service.title}
                     </h2>
-                    <p className="text-stone-600 text-sm leading-relaxed">
-                      {service.shortDescription}
-                    </p>
-                    <span className="mt-3 text-wood text-sm font-body font-medium inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
-                      Learn more
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
-                    </span>
+                  </div>
+
+                  {/* Description — expands on hover */}
+                  <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out">
+                    <div className="overflow-hidden">
+                      <div className="px-5 py-4">
+                        <p className="text-white/80 font-body text-sm leading-relaxed">
+                          {service.shortDescription}
+                        </p>
+                        <span className="mt-2 text-wood text-sm font-body font-medium inline-flex items-center gap-1.5">
+                          Learn more
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>
