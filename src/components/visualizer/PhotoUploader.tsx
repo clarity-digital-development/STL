@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 interface PhotoUploaderProps {
@@ -60,13 +59,10 @@ export function PhotoUploader({ file, preview, onFileChange }: PhotoUploaderProp
       <div className="relative">
         <label className="block font-display text-navy text-lg mb-3">Your space</label>
         <div className="relative rounded-lg overflow-hidden border border-stone-200">
-          <Image
+          <img
             src={preview}
             alt="Uploaded space"
-            width={800}
-            height={450}
-            className="w-full h-auto max-h-[400px] object-cover"
-            unoptimized
+            className="w-full h-auto"
           />
           <button
             onClick={remove}

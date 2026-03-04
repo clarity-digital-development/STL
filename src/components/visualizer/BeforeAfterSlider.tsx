@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 
 interface BeforeAfterSliderProps {
   beforeSrc: string
@@ -16,8 +16,18 @@ export function BeforeAfterSlider({
   afterAlt = 'AI visualization',
 }: BeforeAfterSliderProps) {
   const [position, setPosition] = useState(50)
+  const [aspectRatio, setAspectRatio] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
+
+  // Detect the natural aspect ratio from the before image
+  useEffect(() => {
+    const img = new window.Image()
+    img.onload = () => {
+      setAspectRatio(img.naturalWidth / img.naturalHeight)
+    }
+    img.src = beforeSrc
+  }, [beforeSrc])
 
   const updatePosition = useCallback((clientX: number) => {
     const rect = containerRef.current?.getBoundingClientRect()
@@ -41,10 +51,14 @@ export function BeforeAfterSlider({
     dragging.current = false
   }, [])
 
+  // Default to 4/3 while loading, then use real ratio
+  const ratio = aspectRatio ?? 4 / 3
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-[4/3] md:aspect-[16/10] rounded-lg overflow-hidden cursor-col-resize select-none touch-none"
+      className="relative w-full rounded-lg overflow-hidden cursor-col-resize select-none touch-none"
+      style={{ aspectRatio: ratio }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
