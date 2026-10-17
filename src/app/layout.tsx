@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, DM_Sans } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -8,18 +8,21 @@ import { LocalBusinessSchema } from '@/components/seo/LocalBusinessSchema'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { BUSINESS } from '@/lib/constants'
 
-const playfair = Playfair_Display({
-  subsets: ['latin'],
+// Self-hosted (latin variable fonts from Google Fonts) so builds don't depend on fetching
+// fonts.googleapis.com — Turbopack's next/font/google fails on some of its responses.
+const playfair = localFont({
+  src: './fonts/playfair-display-latin.woff2',
   variable: '--font-playfair',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  weight: '400 900',
+  adjustFontFallback: 'Times New Roman',
 })
 
-const dmSans = DM_Sans({
-  subsets: ['latin'],
+const dmSans = localFont({
+  src: './fonts/dm-sans-latin.woff2',
   variable: '--font-dm-sans',
   display: 'swap',
-  weight: ['300', '400', '500', '600'],
+  weight: '100 1000',
 })
 
 export const viewport: Viewport = {
