@@ -6,11 +6,11 @@ function getAI() {
   return new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
 }
 
-// Models to try in order — if one is unavailable, fall back to the next
+// Models to try in order — if one is unavailable, fall back to the next.
+// Both are ~$0.034 per 1K image; 2.1 gives noticeably better photo edits, Lite is the fast fallback.
 const IMAGE_MODELS = [
-  'gemini-3.1-flash-image-preview',
-  'gemini-3-pro-image-preview',
-  'gemini-2.5-flash-image',
+  'gemini-nano-banana-2.1',
+  'gemini-3.1-flash-lite-image',
 ]
 
 // ── Rate limiting (in-memory, resets on server restart) ──────────

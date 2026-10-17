@@ -11,13 +11,41 @@ interface PhotoUploaderProps {
 
 const MAX_SIZE = 10 * 1024 * 1024 // 10MB
 const ACCEPTED = ['image/jpeg', 'image/png', 'image/webp']
+const MAX_DIMENSION = 2048 // longest edge sent to the API — Vercel caps request bodies at 4.5MB
+
+// Downscale and re-encode as JPEG so phone photos stay well under the upload limit
+async function downscaleImage(file: File): Promise<File> {
+  const url = URL.createObjectURL(file)
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const el = new Image()
+      el.onload = () => resolve(el)
+      el.onerror = reject
+      el.src = url
+    })
+    const scale = Math.min(1, MAX_DIMENSION / Math.max(img.naturalWidth, img.naturalHeight))
+    const canvas = document.createElement('canvas')
+    canvas.width = Math.round(img.naturalWidth * scale)
+    canvas.height = Math.round(img.naturalHeight * scale)
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return file
+    ctx.fillStyle = '#fff'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85))
+    if (!blob) return file
+    return new File([blob], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' })
+  } finally {
+    URL.revokeObjectURL(url)
+  }
+}
 
 export function PhotoUploader({ file, preview, onFileChange }: PhotoUploaderProps) {
   const [dragOver, setDragOver] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleFile = useCallback((f: File) => {
+  const handleFile = useCallback(async (f: File) => {
     setError(null)
 
     if (!ACCEPTED.includes(f.type)) {
@@ -29,11 +57,19 @@ export function PhotoUploader({ file, preview, onFileChange }: PhotoUploaderProp
       return
     }
 
+    let upload = f
+    try {
+      upload = await downscaleImage(f)
+    } catch {
+      setError('Could not read that image. Please try a different photo.')
+      return
+    }
+
     const reader = new FileReader()
     reader.onload = (e) => {
-      onFileChange(f, e.target?.result as string)
+      onFileChange(upload, e.target?.result as string)
     }
-    reader.readAsDataURL(f)
+    reader.readAsDataURL(upload)
   }, [onFileChange])
 
   const handleDrop = useCallback((e: React.DragEvent) => {
